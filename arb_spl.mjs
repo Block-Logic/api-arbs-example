@@ -112,7 +112,7 @@ const getConfirmTransaction = async (txid) => {
       return txResult;
     },
     {
-      retries: 40,
+      retries: 60,
       minTimeout: 500,
       maxTimeout: 1000,
     }
@@ -139,12 +139,12 @@ while (true) {
   const sellRoute = await getCoinQuote(
     ASSET_MINT,
     QUOTE_MINT,
-    buyRoute.outAmountWithSlippage
+    buyRoute.outAmount
+    // buyRoute.outAmountWithSlippage
   ).then((res) => res.data[0]);
 
   const isProfitable =
-    // sellRoute.outAmountWithSlippage >
-    sellRoute.outAmount >
+    sellRoute.outAmountWithSlippage >
     buyRoute.inAmount * PROFITABILITY_THRESHOLD;
 
   // console.log(`${sellRoute.outAmount / DECIMAL_CUTTER} / ${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
