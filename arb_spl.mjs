@@ -196,19 +196,19 @@ while (true) {
                 console.log(`  Success: https://solscan.io/tx/${txid}`);
               } catch (e) {
                 // console.log(e);
-                // console.log(`  Failed: https://solscan.io/tx/${txid}`);
+                console.log(`  Failed: https://solscan.io/tx/${txid}`);
 
-                console.log(
-                  `  Failed: https://solscan.io/tx/${txid}. Retrying...`
-                );
+                // console.log(
+                //   `  Failed: https://solscan.io/tx/${txid}. Retrying...`
+                // );
                 // I'm not waiting around for this TX. It is a hail-mary to
                 // rescue this leg of the trade. Retrying here will help if the
                 // first attempt died in the validator queue. Retrying the same
                 // TX after an execution failure is a no-op.
-                connection.sendTransaction(transaction, [wallet.payer], {
-                  skipPreflight: true,
-                  maxRetries: 9,
-                });
+                // connection.sendTransaction(transaction, [wallet.payer], {
+                //   skipPreflight: true,
+                //   maxRetries: 9,
+                // });
               }
             })
         );
