@@ -45,7 +45,8 @@ const ASSETS = {
   BTC: "9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E",
   RAY: "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",
   SAMO: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
-  MNGO: "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac"
+  MNGO: "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
+  SRM: "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt"
 };
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
@@ -58,7 +59,7 @@ const QUOTE_MINT = ASSETS[arg3] || ASSETS.USDC;
 
 // const PROFITABILITY_THRESHOLD = 1.0000; // 1.0010 = +10 bps
 
-const SLIPPAGE = 0.50; // % 0.10 = 10 bps
+const SLIPPAGE = 0.40; // % 0.10 = 10 bps
 
 const DECIMAL_CUTTER = 10 ** 6;
 
