@@ -56,9 +56,9 @@ const ASSET_MINT = ASSETS[arg2] || ASSETS.BTC;
 
 const QUOTE_MINT = ASSETS[arg3] || ASSETS.USDC;
 
-const PROFITABILITY_THRESHOLD = 1.0000; // 1.0010 = +10 bps
+// const PROFITABILITY_THRESHOLD = 1.0000; // 1.0010 = +10 bps
 
-const SLIPPAGE = 0.30; // % 0.10 = 10 bps
+const SLIPPAGE = 0.50; // % 0.10 = 10 bps
 
 const DECIMAL_CUTTER = 10 ** 6;
 
@@ -113,7 +113,7 @@ const getConfirmTransaction = async (txid) => {
     },
     {
       retries: 60,
-      minTimeout: 500,
+      minTimeout: 1000,
       maxTimeout: 1000,
     }
   );
@@ -139,15 +139,14 @@ while (true) {
   const sellRoute = await getCoinQuote(
     ASSET_MINT,
     QUOTE_MINT,
-    buyRoute.outAmount
-    // buyRoute.outAmountWithSlippage
+    // buyRoute.outAmount
+    buyRoute.outAmountWithSlippage
   ).then((res) => res.data[0]);
 
   const isProfitable =
-    sellRoute.outAmountWithSlippage >
-    buyRoute.inAmount * PROFITABILITY_THRESHOLD;
+    sellRoute.outAmountWithSlippage > buyRoute.inAmount;
 
-  // console.log(`${sellRoute.outAmount / DECIMAL_CUTTER} / ${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
+  // console.log(`${buyRoute.inAmount  / DECIMAL_CUTTER} / ${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
   if (isProfitable) {
     console.log(`${arg2}: In: $${buyRoute.inAmount / DECIMAL_CUTTER} Out: $${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
     // console.log(
@@ -190,27 +189,23 @@ while (true) {
                 [wallet.payer],
                 {
                   skipPreflight: true,
-                  maxRetries: 9,
+                  maxRetries: 11,
                 }
               );
               try {
                 await getConfirmTransaction(txid);
                 console.log(`  Success: https://solscan.io/tx/${txid}`);
               } catch (e) {
-                // console.log(e);
-                console.log(`  Failed: https://solscan.io/tx/${txid}`);
-
-                // console.log(
-                //   `  Failed: https://solscan.io/tx/${txid}. Retrying...`
-                // );
-                // I'm not waiting around for this TX. It is a hail-mary to
-                // rescue this leg of the trade. Retrying here will help if the
-                // first attempt died in the validator queue. Retrying the same
-                // TX after an execution failure is a no-op.
-                // connection.sendTransaction(transaction, [wallet.payer], {
-                //   skipPreflight: true,
-                //   maxRetries: 9,
-                // });
+                if (e.message.includes('not confirmed')) {
+                  console.log(`  Expired: https://solscan.io/tx/${txid}.`);
+                  // Hail Mary. Retry TX but don't wait for it.
+                  connection.sendTransaction(transaction, [wallet.payer], {
+                    skipPreflight: true,
+                    maxRetries: 11,
+                  });
+                } else {
+                  console.log(`  Failed: https://solscan.io/tx/${txid}`);
+                }
               }
             })
         );
@@ -218,3 +213,8 @@ while (true) {
     );
   }
 }
+
+// Errors
+// console.log(e.name);
+// console.log(e.message);
+// console.log(e);
