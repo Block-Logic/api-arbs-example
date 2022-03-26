@@ -63,7 +63,7 @@ const QUOTE_MINT = ASSETS[arg3] || ASSETS.USDC;
 
 // const PROFITABILITY_THRESHOLD = 1.0000; // 1.0010 = +10 bps
 
-const SLIPPAGE = 0.50; // % 0.10 = 10 bps
+const SLIPPAGE = 0.75; // % 0.10 = 10 bps
 
 const DECIMAL_CUTTER = 10 ** 6;
 
@@ -151,7 +151,7 @@ while (true) {
   const isProfitable =
     sellRoute.outAmountWithSlippage > buyRoute.inAmount;
 
-  // console.log(`${buyRoute.inAmount  / DECIMAL_CUTTER} / ${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
+  // console.log(`${arg2}: ${buyRoute.inAmount  / DECIMAL_CUTTER} / ${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
   if (isProfitable) {
     console.log(`${arg2}: In: $${buyRoute.inAmount / DECIMAL_CUTTER} Out: $${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
     // console.log(
@@ -199,17 +199,17 @@ while (true) {
               );
               try {
                 await getConfirmTransaction(txid);
-                console.log(`  Success: https://solscan.io/tx/${txid}`);
+                console.log(`${arg2}: Success: https://solscan.io/tx/${txid}`);
               } catch (e) {
                 if (e.message.includes('not confirmed')) {
-                  console.log(`  Expired: https://solscan.io/tx/${txid}.`);
+                  console.log(`${arg2}: Expired: https://solscan.io/tx/${txid}.`);
                   // Hail Mary. Retry TX but don't wait for it.
                   connection.sendTransaction(transaction, [wallet.payer], {
                     skipPreflight: true,
                     maxRetries: 11,
                   });
                 } else {
-                  console.log(`  Failed: https://solscan.io/tx/${txid}`);
+                  console.log(`${arg2}: Failed: https://solscan.io/tx/${txid}`);
                 }
               }
             })
