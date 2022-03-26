@@ -1,0 +1,71 @@
+// Input
+{
+  inAmount: 100000000,
+  outAmount: 978000000,
+  outAmountWithSlippage: 977022000,
+  priceImpactPct: 0.00040161361667123696,
+  marketInfos: [
+    {
+      id: 'KwnjUuZhTMTSGAaavkLEmSyfobY16JNH4poL9oeeEvE',
+      label: 'Saber',
+      inputMint: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+      outputMint: '9vMJfxuKxXBoEa7rM12mYLMwTacLMLDJqHozw96WQL8i',
+      notEnoughLiquidity: false,
+      inAmount: 100000000,
+      outAmount: 99929071,
+      priceImpactPct: 0.0004016136166712114,
+      lpFee: [Object],
+      platformFee: [Object]
+    },
+    {
+      id: '7TeAZYGC6VB1q8UFR5tMbQdGjJVpmLXYe3bnjCZgj2FM',
+      label: 'Serum',
+      inputMint: '9vMJfxuKxXBoEa7rM12mYLMwTacLMLDJqHozw96WQL8i',
+      outputMint: 'So11111111111111111111111111111111111111112',
+      notEnoughLiquidity: false,
+      minInAmount: 102173,
+      minOutAmount: 1000000,
+      inAmount: 99925051,
+      outAmount: 978000000,
+      priceImpactPct: 0,
+      lpFee: [Object],
+      platformFee: [Object]
+    }
+  ]
+}
+
+// Output
+{
+  inAmount: 978000000,
+  outAmount: 100677770,
+  outAmountWithSlippage: 100577092,
+  priceImpactPct: 0.0075653712483042534,
+  marketInfos: [
+    {
+      id: 'MAR1zHjHaQcniE2gXsDptkyKUnNfMEsLBVcfP7vLyv7',
+      label: 'Mercurial',
+      inputMint: 'So11111111111111111111111111111111111111112',
+      outputMint: 'mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So',
+      notEnoughLiquidity: false,
+      inAmount: 978000000,
+      outAmount: 943305524,
+      priceImpactPct: 0.007565371248304236,
+      lpFee: [Object],
+      platformFee: [Object]
+    },
+    {
+      id: '6oGsL2puUgySccKzn9XA9afqF217LfxP5ocq4B3LWsjy',
+      label: 'Serum',
+      inputMint: 'mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So',
+      outputMint: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+      notEnoughLiquidity: false,
+      minInAmount: 1000000,
+      minOutAmount: 106763,
+      inAmount: 943000000,
+      outAmount: 100677770,
+      priceImpactPct: 0,
+      lpFee: [Object],
+      platformFee: [Object]
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+node:internal/process/esm_loader:94
+    internalBinding('errors').triggerUncaughtException(
+                              ^
+
+HTTPError: Response code 400 (Bad Request)
+    at Request.<anonymous> (file:///Users/brianlong/Library/Mobile%20Documents/com~apple~CloudDocs/Projects/api-arbs-example/node_modules/.pnpm/got@12.0.1/node_modules/got/dist/source/as-promise/index.js:86:42)
+    at Object.onceWrapper (node:events:642:26)
+    at Request.emit (node:events:539:35)
+    at Request._onResponseBase (file:///Users/brianlong/Library/Mobile%20Documents/com~apple~CloudDocs/Projects/api-arbs-example/node_modules/.pnpm/got@12.0.1/node_modules/got/dist/source/core/index.js:729:22)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async Request._onResponse (file:///Users/brianlong/Library/Mobile%20Documents/com~apple~CloudDocs/Projects/api-arbs-example/node_modules/.pnpm/got@12.0.1/node_modules/got/dist/source/core/index.js:768:13) {
+  input: undefined,
+  code: 'ERR_NON_2XX_3XX_RESPONSE',
+  timings: {
+    start: 1648328303796,
+    socket: 1648328303797,
+    lookup: 1648328303874,
+    connect: 1648328303887,
+    secureConnect: 1648328303908,
+    upload: 1648328303908,
+    response: 1648328304310,
+    end: 1648328304317,
+    error: undefined,
+    abort: undefined,
+    phases: {
+      wait: 1,
+      dns: 77,
+      tcp: 13,
+      tls: 21,
+      request: 0,
+      firstByte: 402,
+      download: 7,
+      total: 521
+    }
+  },
+  options: Options {
+    _unixOptions: undefined,
+    _internals: {
+      request: undefined,
+      agent: { http: undefined, https: undefined, http2: undefined },
+      h2session: undefined,
+      decompress: true,
+      timeout: {
+        connect: undefined,
+        lookup: undefined,
+        read: undefined,
+        request: undefined,
+        response: undefined,
+        secureConnect: undefined,
+        send: undefined,
+        socket: undefined
+      },
+      prefixUrl: '',
+      body: undefined,
+      form: undefined,
+      json: undefined,
+      cookieJar: undefined,
+      ignoreInvalidCookies: false,
+      searchParams: undefined,
+      dnsLookup: undefined,
+      dnsCache: undefined,
+      context: {},
+      hooks: {
+        init: [],
+        beforeRequest: [],
+        beforeError: [],
+        beforeRedirect: [],
+        beforeRetry: [],
+        afterResponse: []
+      },
+      followRedirect: true,
+      maxRedirects: 10,
+      cache: undefined,
+      throwHttpErrors: true,
+      username: '',
+      password: '',
+      http2: false,
+      allowGetBody: false,
+      headers: {
+        'user-agent': 'got (https://github.com/sindresorhus/got)',
+        accept: 'application/json',
+        'accept-encoding': 'gzip, deflate, br'
+      },
+      methodRewriting: false,
+      dnsLookupIpVersion: undefined,
+      parseJson: [Function: parse],
+      stringifyJson: [Function: stringify],
+      retry: {
+        limit: 2,
+        methods: [ 'GET', 'PUT', 'HEAD', 'DELETE', 'OPTIONS', 'TRACE' ],
+        statusCodes: [
+          408, 413, 429, 500,
+          502, 503, 504, 521,
+          522, 524
+        ],
+        errorCodes: [
+          'ETIMEDOUT',
+          'ECONNRESET',
+          'EADDRINUSE',
+          'ECONNREFUSED',
+          'EPIPE',
+          'ENOTFOUND',
+          'ENETUNREACH',
+          'EAI_AGAIN'
+        ],
+        maxRetryAfter: undefined,
+        calculateDelay: [Function: calculateDelay],
+        backoffLimit: Infinity,
+        noise: 100
+      },
+      localAddress: undefined,
+      method: 'GET',
+      createConnection: undefined,
+      cacheOptions: {
+        shared: undefined,
+        cacheHeuristic: undefined,
+        immutableMinTimeToLive: undefined,
+        ignoreCargoCult: undefined
+      },
+      https: {
+        alpnProtocols: undefined,
+        rejectUnauthorized: undefined,
+        checkServerIdentity: undefined,
+        certificateAuthority: undefined,
+        key: undefined,
+        certificate: undefined,
+        passphrase: undefined,
+        pfx: undefined,
+        ciphers: undefined,
+        honorCipherOrder: undefined,
+        minVersion: undefined,
+        maxVersion: undefined,
+        signatureAlgorithms: undefined,
+        tlsSessionLifetime: undefined,
+        dhparam: undefined,
+        ecdhCurve: undefined,
+        certificateRevocationLists: undefined
+      },
+      encoding: undefined,
+      resolveBodyOnly: false,
+      isStream: false,
+      responseType: 'text',
+      url: <ref *1> URL {
+        [Symbol(context)]: URLContext {
+          flags: 912,
+          scheme: 'https:',
+          username: '',
+          password: '',
+          host: 'quote-api.jup.ag',
+          port: null,
+          path: [ 'v1', 'quote' ],
+          query: 'outputMint=So11111111111111111111111111111111111111112&inputMint=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&amount=undefined&slippage=0.1',
+          fragment: null
+        },
+        [Symbol(query)]: URLSearchParams {
+          [Symbol(query)]: [
+            'outputMint',
+            'So11111111111111111111111111111111111111112',
+            'inputMint',
+            'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+            'amount',
+            'undefined',
+            'slippage',
+            '0.1'
+          ],
+          [Symbol(context)]: [Circular *1]
+        }
+      },
+      pagination: {
+        transform: [Function: transform],
+        paginate: [Function: paginate],
+        filter: [Function: filter],
+        shouldContinue: [Function: shouldContinue],
+        countLimit: Infinity,
+        backoff: 0,
+        requestLimit: 10000,
+        stackAllItems: false
+      },
+      setHost: true,
+      maxHeaderSize: undefined
+    },
+    _merging: false,
+    _init: [ { method: 'get' } ]
+  }
+}

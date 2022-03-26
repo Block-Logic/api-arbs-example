@@ -1,0 +1,84 @@
+# Example config.
+# WSOL_USDC:
+#   base_symbol: WSOL
+#   quote_symbol: USDC
+#   risk: 1.0010 # 1.0010 = 10 bps
+#   slippage: 0.10 # 0.10 = 10 bps
+#
+# Notes:
+#  The quote API uses a minimum slippage value. Pass in 0.0000001 if you want
+#  zero slippage
+
+---
+MER_USDC:
+  base_symbol: MER
+  quote_symbol: USDC
+  quote_value: 100000000
+  risk: 1.0050
+  slippage: 0.10
+MNGO_USDC:
+  base_symbol: MNGO
+  quote_symbol: USDC
+  quote_value: 100000000
+  risk: 1.0050
+  slippage: 0.10
+MSOL_WSOL:
+  base_symbol: MSOL
+  quote_symbol: WSOL
+  quote_value: 100000000
+  risk: 1.0010
+  slippage: 0.10
+ORCA_USDC:
+  base_symbol: ORCA
+  quote_symbol: USDC
+  quote_value: 100000000
+  risk: 1.0050
+  slippage: 0.10
+RAY_USDC:
+  base_symbol: RAY
+  quote_symbol: USDC
+  quote_value: 100000000
+  risk: 1.0050
+  slippage: 0.10
+RIN_USDC:
+  base_symbol: RIN
+  quote_symbol: USDC
+  quote_value: 100000000
+  risk: 1.0050
+  slippage: 0.10
+SRM_USDC:
+  base_symbol: SRM
+  quote_symbol: USDC
+  quote_value: 100000000
+  risk: 1.0050
+  slippage: 0.10
+STEP_USDC:
+  base_symbol: STEP
+  quote_symbol: USDC
+  quote_value: 100000000
+  risk: 1.0050
+  slippage: 0.10
+STSOL_WSOL:
+  base_symbol: STSOL
+  quote_symbol: WSOL
+  quote_value: 100000000
+  risk: 1.0010
+  slippage: 0.10
+USDT_USDC:
+  base_symbol: USDT
+  quote_symbol: USDC
+  quote_value: 100000000
+  risk: 1.0010
+  slippage: 0.10
+UST_USDC:
+  base_symbol: UST
+  quote_symbol: USDC
+  quote_value: 100000000
+  risk: 1.0010
+  slippage: 0.10
+WSOL_USDC:
+  base_symbol: WSOL
+  quote_symbol: USDC
+  quote_value: 100000000
+  risk: 1.0050
+  slippage: 0.10

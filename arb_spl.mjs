@@ -8,6 +8,19 @@
 //   - Run this script `node arb_spl.mjs WSOL USDC` (or change the tokens)
 //
 // Credits: https://github.com/vvllxxdd/jupiter-arb
+//
+// For Debugging:
+// NODE_INSPECT_RESUME_ON_START=1 node inspect arb_spl.mjs
+// then include `debugger;` where you want to inspect the state
+//
+// Program Error Codes:
+// 0x1 -- check the log notes, but probably insufficient funds
+// 0x1770 -- occurs when the Slippage tolerance is exceeded, so when the final
+// out amount is less than the minimum out amount.
+// 0x178e --
+//
+// Sample Quote:
+// https://quote-api.jup.ag/v1/quote?outputMint=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&inputMint=So11111111111111111111111111111111111111112&amount=100000000&slippage=0.1
 
 import dotenv from "dotenv";
 import bs58 from "bs58";
@@ -26,46 +39,46 @@ import {
   Token,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
-
+import fs from 'fs';
+import YAML from 'yaml';
 import { argv } from "process";
-
-const [_0, _1, arg2, arg3] = argv;
+import crypto from 'crypto';
 
 dotenv.config();
-
-const ASSETS = {
-  BTC: "9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E",
-  ETH: "7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs",
-  MER: "MERt85fc5boKw3BW1eYdxonEuJNvXbiMbs6hvheau5K",
-  MNGO: "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
-  MSOL: "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So",
-  ORCA: "orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE",
-  RAY: "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",
-  RIN: "E5ndSkaB17Dm7CsD22dvcjfrYSDLCxFcMd6z8ddCk5wp",
-  SAMO: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
-  SOETH: "2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk",
-  SRM: "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt",
-  STEP: "StepAscQoEioFxxWGnh2sLBDFp9d8rvKz2Yp39iDpyT",
-  STSOL: "7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj",
-  USDC: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-  USDT: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
-  UST: "9vMJfxuKxXBoEa7rM12mYLMwTacLMLDJqHozw96WQL8i",
-  WSOL: "So11111111111111111111111111111111111111112"
-};
-
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
-
 const ENDPOINT = process.env.RPC_URL;
 
-const ASSET_MINT = ASSETS[arg2] || ASSETS.BTC;
+// Read the symbols from the args and check that they exist
+const [_0, _1, arg2, arg3] = argv;
+const BASE_SYM  = arg2;
+const QUOTE_SYM = arg3;
+if (typeof BASE_SYM === 'undefined' || typeof BASE_SYM === 'undefined') {
+  console.log('Symbols are Missing. Usage: `node arb_spl.mjs BASE QUOTE`')
+  process.exit(1);
+}
 
-const QUOTE_MINT = ASSETS[arg3] || ASSETS.USDC;
+// Read the MINTS file. Access values like `MINTS['WSOL']`
+const MINTS = YAML.parse(fs.readFileSync('./mints.yml', 'utf8'));
+const ASSET_MINT = MINTS[arg2] || MINTS['WSOL'];
+const QUOTE_MINT = MINTS[arg3] || MINTS['USDC'];
 
-// const PROFITABILITY_THRESHOLD = 1.0000; // 1.0010 = +10 bps
+// Read the Arb Config file. See arb_config.yml
+// Access values like ARB_CONFIG[`${BASE_SYM}_${QUOTE_SYM}`]['slippage']
+const ARB_CONFIG = YAML.parse(fs.readFileSync('./arb_config.yml', 'utf8'));
+if (typeof ARB_CONFIG[`${BASE_SYM}_${QUOTE_SYM}`]['slippage'] === 'undefined') {
+  console.log('Slippage is Missing. Check config file.')
+  process.exit(1);
+}
 
-const SLIPPAGE = 0.75; // % 0.10 = 10 bps
-
+// 1.0010 = +10 bps
+const RISK = ARB_CONFIG[`${BASE_SYM}_${QUOTE_SYM}`]['risk'];
+const SLIPPAGE = ARB_CONFIG[`${BASE_SYM}_${QUOTE_SYM}`]['slippage'];
 const DECIMAL_CUTTER = 10 ** 6;
+
+// const initial = tokenAccountBalance.value.amount;
+// Assumes that USDC is the quote currency!
+const initial = ARB_CONFIG[`${BASE_SYM}_${QUOTE_SYM}`]['quote_value'];
+// const initial = 100_000_000;
 
 const connection = new Connection(ENDPOINT);
 
@@ -85,8 +98,20 @@ const getCoinQuote = (inputMint, outputMint, amount) =>
     )
     .json();
 
+
 const getTransaction = (route) => {
-  return got
+  // Rewrite the outAmount if the target is the quote symbol
+  route['marketInfos'].forEach((mi) => {
+    if (QUOTE_MINT == mi['outputMint']) {
+        route['outAmount'] = initial / RISK;
+        route['outAmountWithSlippage'] = initial / RISK;
+       }
+     }
+    // mi => console.log(mi['outputMint'])
+   );
+   console.log(route);
+
+  const tx = got
     .post("https://quote-api.jup.ag/v1/swap", {
       json: {
         route: route,
@@ -96,6 +121,8 @@ const getTransaction = (route) => {
       },
     })
     .json();
+    // console.log(tx);
+    return tx;
 };
 
 const getConfirmTransaction = async (txid) => {
@@ -128,14 +155,15 @@ const getConfirmTransaction = async (txid) => {
   return txid;
 };
 
-// const initial = tokenAccountBalance.value.amount;
-const initial = 100_000_000; // Assumes that USDC is the quote currency
 
 while (true) {
   // Account Token Account Info
   // const tokenAccountBalance = await connection.getTokenAccountBalance(
   //   new PublicKey(quoteAddress)
   // );
+
+  var uuid = crypto.randomUUID();
+  // console.log(uuid);
 
   const buyRoute = await getCoinQuote(QUOTE_MINT, ASSET_MINT, initial).then(
     (res) => res.data[0]
@@ -144,32 +172,16 @@ while (true) {
   const sellRoute = await getCoinQuote(
     ASSET_MINT,
     QUOTE_MINT,
-    // buyRoute.outAmount
-    buyRoute.outAmountWithSlippage
+    buyRoute.outAmount
+    // buyRoute.outAmountWithSlippage
   ).then((res) => res.data[0]);
 
   const isProfitable =
-    sellRoute.outAmountWithSlippage > buyRoute.inAmount;
+    sellRoute.outAmountWithSlippage > buyRoute.inAmount * RISK;
 
   // console.log(`${arg2}: ${buyRoute.inAmount  / DECIMAL_CUTTER} / ${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
   if (isProfitable) {
-    console.log(`${arg2}: In: $${buyRoute.inAmount / DECIMAL_CUTTER} Out: $${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
-    // console.log(
-    //   `
-    //   Asset: ${arg2}
-    //   buyRoute:       $${buyRoute.inAmount / DECIMAL_CUTTER}
-    //   sellRoute.out:  $${sellRoute.outAmount / DECIMAL_CUTTER}
-    //   sellRoute.slip: $${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}
-    //   Swap rate is $${buyRoute.inAmount / DECIMAL_CUTTER} for $${
-    //     sellRoute.outAmountWithSlippage / DECIMAL_CUTTER
-    //   }.
-    //   Min. profitable: $${
-    //     (buyRoute.inAmount / DECIMAL_CUTTER) * PROFITABILITY_THRESHOLD
-    //   }.
-    //   ${isProfitable ? "Profitable" : "Not profitable"}
-    //   <--------------------------------------------------->
-    // `
-    // );
+    console.log(`uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', in: ${buyRoute.inAmount / DECIMAL_CUTTER}, out: ${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
   };
 
   // when outAmount more than initial
@@ -187,6 +199,7 @@ while (true) {
               const transaction = Transaction.from(
                 Buffer.from(serializedTransaction, "base64")
               );
+              // console.log(transaction);
               // perform the swap
               // Transaction might failed or dropped
               const txid = await connection.sendTransaction(
@@ -199,17 +212,17 @@ while (true) {
               );
               try {
                 await getConfirmTransaction(txid);
-                console.log(`${arg2}: Success: https://solscan.io/tx/${txid}`);
+                console.log(`uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', tx_status: 'success', tx_url: 'https://solscan.io/tx/${txid}'`);
               } catch (e) {
                 if (e.message.includes('not confirmed')) {
-                  console.log(`${arg2}: Expired: https://solscan.io/tx/${txid}.`);
+                  console.log(`uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', tx_status: 'expired', tx_url: 'https://solscan.io/tx/${txid}'`);
                   // Hail Mary. Retry TX but don't wait for it.
                   connection.sendTransaction(transaction, [wallet.payer], {
                     skipPreflight: true,
                     maxRetries: 11,
                   });
                 } else {
-                  console.log(`${arg2}: Failed: https://solscan.io/tx/${txid}`);
+                  console.log(`uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', tx_status: 'failed', tx_url: 'https://solscan.io/tx/${txid}'`);
                 }
               }
             })

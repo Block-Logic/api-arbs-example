@@ -1,0 +1,200 @@
+node:internal/process/esm_loader:94
+    internalBinding('errors').triggerUncaughtException(
+                              ^
+
+ReadError: The server aborted pending request
+    at PassThrough.<anonymous> (file:///Users/brianlong/Library/Mobile%20Documents/com~apple~CloudDocs/Projects/api-arbs-example/node_modules/.pnpm/got@12.0.1/node_modules/got/dist/source/core/index.js:614:31)
+    at Object.onceWrapper (node:events:641:28)
+    at PassThrough.emit (node:events:527:28)
+    at IncomingMessage.<anonymous> (/Users/brianlong/Library/Mobile Documents/com~apple~CloudDocs/Projects/api-arbs-example/node_modules/.pnpm/mimic-response@3.1.0/node_modules/mimic-response/index.js:59:12)
+    at Object.onceWrapper (node:events:641:28)
+    at IncomingMessage.emit (node:events:539:35)
+    at IncomingMessage._destroy (node:_http_incoming:179:10)
+    at _destroy (node:internal/streams/destroy:109:25)
+    at IncomingMessage.destroy (node:internal/streams/destroy:71:5)
+    at TLSSocket.socketCloseListener (node:_http_client:402:11) {
+  input: undefined,
+  code: 'ECONNRESET',
+  timings: {
+    start: 1647951181546,
+    socket: 1647951181546,
+    lookup: 1647951181548,
+    connect: 1647951181566,
+    secureConnect: 1647951181586,
+    upload: 1647951181586,
+    response: 1647951183975,
+    end: undefined,
+    error: undefined,
+    abort: 1647951244490,
+    phases: {
+      wait: 0,
+      dns: 2,
+      tcp: 18,
+      tls: 20,
+      request: 0,
+      firstByte: 2389,
+      download: undefined,
+      total: 62944
+    }
+  },
+  options: Options {
+    _unixOptions: undefined,
+    _internals: {
+      request: undefined,
+      agent: { http: undefined, https: undefined, http2: undefined },
+      h2session: undefined,
+      decompress: true,
+      timeout: {
+        connect: undefined,
+        lookup: undefined,
+        read: undefined,
+        request: undefined,
+        response: undefined,
+        secureConnect: undefined,
+        send: undefined,
+        socket: undefined
+      },
+      prefixUrl: '',
+      body: '{"route":{"inAmount":545125522,"outAmount":50034207,"outAmountWithSlippage":49934139,"priceImpactPct":0.0033703126454339705,"marketInfos":[{"id":"7Mu9zK6qV3wGp5deSkhCeWqaDnL3kdD4gKL87ui6GtmX","label":"Raydium","inputMint":"So11111111111111111111111111111111111111112","outputMint":"ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx","notEnoughLiquidity":false,"inAmount":545125522,"outAmount":187510784570,"priceImpactPct":0.0033637792244595884,"lpFee":{"amount":1362813,"mint":"So11111111111111111111111111111111111111112","pct":0.0025},"platformFee":{"amount":0,"mint":"ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx","pct":0}},{"id":"2bnZ1edbvK3CK3LTNZ5jH9anvXYCmzPR4W2HQ6Ngsv5K","label":"Raydium","inputMint":"ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx","outputMint":"EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v","notEnoughLiquidity":false,"inAmount":187510784570,"outAmount":50034207,"priceImpactPct":0.000006555472135396082,"lpFee":{"amount":468776961,"mint":"ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx","pct":0.0025},"platformFee":{"amount":0,"mint":"EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v","pct":0}}]},"userPublicKey":"arbp6SkGwKz7qkUt9StvZKTWFfDHeJfusUSpw6aqR27","wrapUnwrapSOL":false}',
+      form: undefined,
+      json: undefined,
+      cookieJar: undefined,
+      ignoreInvalidCookies: false,
+      searchParams: undefined,
+      dnsLookup: undefined,
+      dnsCache: undefined,
+      context: {},
+      hooks: {
+        init: [],
+        beforeRequest: [],
+        beforeError: [],
+        beforeRedirect: [],
+        beforeRetry: [],
+        afterResponse: []
+      },
+      followRedirect: true,
+      maxRedirects: 10,
+      cache: undefined,
+      throwHttpErrors: true,
+      username: '',
+      password: '',
+      http2: false,
+      allowGetBody: false,
+      headers: {
+        'user-agent': 'got (https://github.com/sindresorhus/got)',
+        'content-type': 'application/json',
+        accept: 'application/json',
+        'content-length': '1198',
+        'accept-encoding': 'gzip, deflate, br'
+      },
+      methodRewriting: false,
+      dnsLookupIpVersion: undefined,
+      parseJson: [Function: parse],
+      stringifyJson: [Function: stringify],
+      retry: {
+        limit: 2,
+        methods: [ 'GET', 'PUT', 'HEAD', 'DELETE', 'OPTIONS', 'TRACE' ],
+        statusCodes: [
+          408, 413, 429, 500,
+          502, 503, 504, 521,
+          522, 524
+        ],
+        errorCodes: [
+          'ETIMEDOUT',
+          'ECONNRESET',
+          'EADDRINUSE',
+          'ECONNREFUSED',
+          'EPIPE',
+          'ENOTFOUND',
+          'ENETUNREACH',
+          'EAI_AGAIN'
+        ],
+        maxRetryAfter: undefined,
+        calculateDelay: [Function: calculateDelay],
+        backoffLimit: Infinity,
+        noise: 100
+      },
+      localAddress: undefined,
+      method: 'POST',
+      createConnection: undefined,
+      cacheOptions: {
+        shared: undefined,
+        cacheHeuristic: undefined,
+        immutableMinTimeToLive: undefined,
+        ignoreCargoCult: undefined
+      },
+      https: {
+        alpnProtocols: undefined,
+        rejectUnauthorized: undefined,
+        checkServerIdentity: undefined,
+        certificateAuthority: undefined,
+        key: undefined,
+        certificate: undefined,
+        passphrase: undefined,
+        pfx: undefined,
+        ciphers: undefined,
+        honorCipherOrder: undefined,
+        minVersion: undefined,
+        maxVersion: undefined,
+        signatureAlgorithms: undefined,
+        tlsSessionLifetime: undefined,
+        dhparam: undefined,
+        ecdhCurve: undefined,
+        certificateRevocationLists: undefined
+      },
+      encoding: undefined,
+      resolveBodyOnly: false,
+      isStream: false,
+      responseType: 'text',
+      url: <ref *1> URL {
+        [Symbol(context)]: URLContext {
+          flags: 400,
+          scheme: 'https:',
+          username: '',
+          password: '',
+          host: 'quote-api.jup.ag',
+          port: null,
+          path: [ 'v1', 'swap' ],
+          query: null,
+          fragment: null
+        },
+        [Symbol(query)]: URLSearchParams {
+          [Symbol(query)]: [],
+          [Symbol(context)]: [Circular *1]
+        }
+      },
+      pagination: {
+        transform: [Function: transform],
+        paginate: [Function: paginate],
+        filter: [Function: filter],
+        shouldContinue: [Function: shouldContinue],
+        countLimit: Infinity,
+        backoff: 0,
+        requestLimit: 10000,
+        stackAllItems: false
+      },
+      setHost: true,
+      maxHeaderSize: undefined
+    },
+    _merging: false,
+    _init: [
+      {
+        json: {
+          route: {
+            inAmount: 545125522,
+            outAmount: 50034207,
+            outAmountWithSlippage: 49934139,
+            priceImpactPct: 0.0033703126454339705,
+            marketInfos: [Array]
+          },
+          userPublicKey: 'arbp6SkGwKz7qkUt9StvZKTWFfDHeJfusUSpw6aqR27',
+          wrapUnwrapSOL: false
+        },
+        method: 'post'
+      }
+    ]
+  },
+  bufferedData: Buffer(0) [Uint8Array] []
+}
+
+Node.js v17.7.2
