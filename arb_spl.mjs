@@ -63,7 +63,7 @@ const QUOTE_MINT = ASSETS[arg3] || ASSETS.USDC;
 
 // const PROFITABILITY_THRESHOLD = 1.0000; // 1.0010 = +10 bps
 
-const SLIPPAGE = 0.40; // % 0.10 = 10 bps
+const SLIPPAGE = 0.50; // % 0.10 = 10 bps
 
 const DECIMAL_CUTTER = 10 ** 6;
 
