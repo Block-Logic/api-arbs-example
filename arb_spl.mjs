@@ -18,6 +18,7 @@
 // 0x1770 -- occurs when the Slippage tolerance is exceeded, so when the final
 // out amount is less than the minimum out amount.
 // 0x178e --
+// 0x28 --
 //
 // Sample Quote:
 // https://quote-api.jup.ag/v1/quote?outputMint=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&inputMint=So11111111111111111111111111111111111111112&amount=100000000&slippage=0.1
