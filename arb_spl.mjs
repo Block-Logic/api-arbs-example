@@ -18,6 +18,7 @@
 // 0x1770 -- occurs when the Slippage tolerance is exceeded, so when the final
 // out amount is less than the minimum out amount.
 // 0x178e --
+// 0x22 --
 // 0x28 --
 //
 // Sample Quote:
