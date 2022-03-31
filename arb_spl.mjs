@@ -174,8 +174,8 @@ while (true) {
   const sellRoute = await getCoinQuote(
     ASSET_MINT,
     QUOTE_MINT,
-    buyRoute.outAmount
-    // buyRoute.outAmountWithSlippage
+    // buyRoute.outAmount
+    buyRoute.outAmountWithSlippage
   ).then((res) => res.data[0]);
 
   const isProfitable =
