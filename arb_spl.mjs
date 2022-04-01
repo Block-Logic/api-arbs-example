@@ -183,7 +183,7 @@ while (true) {
 
   // console.log(`${arg2}: ${buyRoute.inAmount  / DECIMAL_CUTTER} / ${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
   if (isProfitable) {
-    console.log(`uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', in: ${buyRoute.inAmount / DECIMAL_CUTTER} => ${buyRoute.outAmountWithSlippage / DECIMAL_CUTTER}, out: ${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
+    console.log(`uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', in: ${buyRoute.inAmount / DECIMAL_CUTTER} => ${buyRoute.outAmountWithSlippage / DECIMAL_CUTTER}, out: ${sellRoute.inAmount / DECIMAL_CUTTER} => ${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}, risk: ${buyRoute.inAmount * RISK}`)
   };
 
   // when outAmount more than initial
