@@ -103,14 +103,14 @@ const getCoinQuote = (inputMint, outputMint, amount) =>
 
 const getTransaction = (route) => {
   // Rewrite the outAmount if the target is the quote symbol
-  route['marketInfos'].forEach((mi) => {
-    if (QUOTE_MINT == mi['outputMint']) {
-        route['outAmount'] = initial / RISK;
-        route['outAmountWithSlippage'] = initial / RISK;
-       }
-     }
-    // mi => console.log(mi['outputMint'])
-   );
+  // route['marketInfos'].forEach((mi) => {
+  //   if (QUOTE_MINT == mi['outputMint']) {
+  //       route['outAmount'] = initial / RISK;
+  //       route['outAmountWithSlippage'] = initial / RISK;
+  //      }
+  //    }
+  //   // mi => console.log(mi['outputMint'])
+  //  );
    console.log(route);
 
   const tx = got
