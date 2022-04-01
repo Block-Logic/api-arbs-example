@@ -214,17 +214,17 @@ while (true) {
               );
               try {
                 await getConfirmTransaction(txid);
-                console.log(`uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', tx_status: 'success', tx_url: 'https://solscan.io/tx/${txid}'`);
+                console.log(`  uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', tx_status: 'success', tx_url: 'https://solscan.io/tx/${txid}'`);
               } catch (e) {
                 if (e.message.includes('not confirmed')) {
-                  console.log(`uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', tx_status: 'expired', tx_url: 'https://solscan.io/tx/${txid}'`);
+                  console.log(`  uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', tx_status: 'expired', tx_url: 'https://solscan.io/tx/${txid}'`);
                   // Hail Mary. Retry TX but don't wait for it.
                   connection.sendTransaction(transaction, [wallet.payer], {
                     skipPreflight: true,
                     maxRetries: 11,
                   });
                 } else {
-                  console.log(`uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', tx_status: 'failed', tx_url: 'https://solscan.io/tx/${txid}'`);
+                  console.log(`  uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', tx_status: 'failed', tx_url: 'https://solscan.io/tx/${txid}'`);
                 }
               }
             })
