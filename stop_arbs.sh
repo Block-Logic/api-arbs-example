@@ -1,2 +1,2 @@
 pkill -f arb_spl
-ps ax | grep node
+ps ax | grep arb_spl

@@ -10,4 +10,4 @@ node arb_spl.mjs MER USDC >> arb_spl.log &
 # node arb_spl.mjs UST USDC >> arb_spl.log &
 # node arb_spl.mjs USDT USDC >> arb_spl.log &
 node arb_spl.mjs WSOL USDC >> arb_spl.log &
-ps ax | grep node
+ps ax | grep arb_spl

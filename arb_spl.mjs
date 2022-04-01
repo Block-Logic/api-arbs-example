@@ -179,11 +179,11 @@ while (true) {
   ).then((res) => res.data[0]);
 
   const isProfitable =
-    sellRoute.outAmountWithSlippage > buyRoute.inAmount * RISK;
+    sellRoute.outAmountWithSlippage > (buyRoute.inAmount * RISK);
 
   // console.log(`${arg2}: ${buyRoute.inAmount  / DECIMAL_CUTTER} / ${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
   if (isProfitable) {
-    console.log(`uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', in: ${buyRoute.inAmount / DECIMAL_CUTTER}, out: ${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
+    console.log(`uuid: '${uuid}', pair: '${BASE_SYM}_${QUOTE_SYM}', in: ${buyRoute.inAmount / DECIMAL_CUTTER} => ${buyRoute.outAmountWithSlippage}, out: ${sellRoute.outAmountWithSlippage / DECIMAL_CUTTER}`)
   };
 
   // when outAmount more than initial
