@@ -11,3 +11,4 @@ node arb_spl.mjs MER USDC >> arb_spl.log &
 # node arb_spl.mjs USDT USDC >> arb_spl.log &
 node arb_spl.mjs WSOL USDC >> arb_spl.log &
 ps ax | grep arb_spl
+tail -f arb_spl.log
